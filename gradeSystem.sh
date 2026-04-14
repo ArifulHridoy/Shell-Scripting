@@ -1,3 +1,7 @@
+echo -n "Enter no. of students: "
+read m
+for ((i=0; i<m; i++))
+do
 echo -n "Enter your mark: "
 read n
 case $n in
@@ -9,3 +13,4 @@ case $n in
 3[3-9]) echo "D";;
 *) echo "F";;
 esac
+done
