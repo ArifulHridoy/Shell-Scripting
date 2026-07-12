@@ -144,3 +144,40 @@ dbms_output.put_line('Full name : ' || result.fullname);
 dbms_output.put_line('Total book : ' || result.bookcount);
 end;
 /
+
+declare
+type myarray is varray(5) of varchar2(25);
+cursor mycursor is select pname from products;
+name varchar(25);
+arr myarray := myarray();
+
+begin
+open mycursor;
+
+loop
+fetch mycursor into name;
+exit when mycursor%notfound;
+arr.extend;
+arr(arr.count) := name;
+end loop;
+close mycursor;
+for i in 1..arr.count loop
+dbms_output.put_line(arr(i));
+end loop;
+end;
+/
+
+DECLARE
+    TYPE product_table IS TABLE OF VARCHAR2(25);
+    products product_table := product_table('Mouse', 'Keyboard', 'Knife', 'Lays');
+BEGIN
+    products.DELETE(2);
+    products.EXTEND;
+    products(products.last) := 'Emni';
+    FOR i IN 1..products.LAST LOOP
+        IF products.EXISTS(i) THEN
+            DBMS_OUTPUT.PUT_LINE(products(i));
+        END IF;
+    END LOOP;
+END;
+/
